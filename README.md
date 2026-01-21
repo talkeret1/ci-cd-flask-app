@@ -1,4 +1,4 @@
-# CI/CD Flask App v2.0.0
+# CI/CD Flask App v1.0.0
 
 Hi, I'm [Your Name] 👋
 
