@@ -1,0 +1,66 @@
+name: CI/CD - Flask Docker
+
+# Execute Pipeline when Pushing Tags
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+      
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout code
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Build Docker image
+    - name: Build Docker image
+      run: |
+        docker build -t ci-cd-flask-app:latest .
+
+    # Run container
+    - name: Run container
+      run: |
+        docker run -d --name flask-app -p 5000:5000 ci-cd-flask-app:latest
+        sleep 5
+
+    # Health check
+    - name: Health check
+      run: |
+        response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/health)
+        if [ "$response" -ne 200 ]; then
+          echo "Health check failed! HTTP code: $response"
+          exit 1
+        else
+          echo "Health check passed ✅"
+        fi
+
+    # Login to Docker Hub
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+    # Set Version
+    - name: Set version
+      run: |
+        VERSION=${GITHUB_REF#refs/tags/v}
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+    - name: Tag & Push
+      run: |
+        docker tag ci-cd-flask-app:latest talkeret/ci-cd-flask-app:$VERSION
+        docker tag ci-cd-flask-app:latest talkeret/ci-cd-flask-app:latest
+
+        docker push talkeret/ci-cd-flask-app:$VERSION
+        docker push talkeret/ci-cd-flask-app:latest
+
+
+    # Cleanup
+    - name: Stop container
+      run: |
+        docker rm -f flask-app  || true
