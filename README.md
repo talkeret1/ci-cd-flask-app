@@ -73,5 +73,5 @@ https://github.com/your-username/ci-cd-flask-app
 
 ## 📫 Contact
 
-- LinkedIn: https://www.linkedin.com/in/your-linkedin
-- GitHub: https://github.com/your-username
+- LinkedIn: https://www.linkedin.com/in/talkeret
+- GitHub: https://github.com/talkeret1
