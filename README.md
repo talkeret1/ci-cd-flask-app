@@ -1,6 +1,6 @@
 # CI/CD Flask App v1.0.0
 
-Hi, I'm [Your Name] 👋
+Hi, I'm Tal Keret 👋
 
 Junior DevOps Engineer with hands-on experience in CI/CD, Docker, Linux and Infrastructure as Code.
 I enjoy building automated pipelines and production-ready systems.
