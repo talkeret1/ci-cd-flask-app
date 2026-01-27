@@ -14,10 +14,11 @@ def get_version():
         tag = subprocess.check_output(
             ["git", "describe", "--tags", "--abbrev=0"],
             stderr=subprocess.STDOUT
-        ).decode("utf-8").strip()
+            ).decode("utf-8").strip()
         if tag.startswith("v"):
             return tag
-    # except subprocess.CalledProcessError:
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return "unknown"
     #     pass
     # except FileNotFoundError:
     #     pass
@@ -29,11 +30,9 @@ def get_version():
     #         for part in line.split():
     #             if part.startswith("v"):
     #                 return part
-     except FileNotFoundError:
-        return "unknown"
-
-    return "unknown"
-
+    # except FileNotFoundError:
+        # return "unknown"
+    
 @app.route("/")
 def home():
     version = get_version()
