@@ -1,4 +1,4 @@
-# CI/CD Flask App v1.0.5
+# CI/CD Flask App v1.0.6
 
 Hi, I'm Tal Keret 👋
 
