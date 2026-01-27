@@ -1,19 +1,12 @@
-# Base image
-FROM python:3.11-slim
-
-# Set working directory
-WORKDIR /flask-app
-
-# Copy files
+FROM python:3.11-slim AS builder
+WORKDIR /app
 COPY requirements.txt .
-COPY app ./app
-COPY README.md .
-
-# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port
+FROM python:3.11-slim
+WORKDIR /app
+COPY --from=builder /usr/local /usr/local
+COPY app/ app/
+COPY README.md .
 EXPOSE 5000
-
-# Run the app
 CMD ["python", "-m", "app"]

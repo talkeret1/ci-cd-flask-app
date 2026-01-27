@@ -16,6 +16,18 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    # Install dependencies
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # Python
+    - name: Run pytests
+      run: |
+        pip install pytest
+        pytest
+
     # Build Docker image
     - name: Build Docker image
       run: |
