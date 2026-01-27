@@ -17,19 +17,19 @@ def get_version():
         ).decode("utf-8").strip()
         if tag.startswith("v"):
             return tag
-    except subprocess.CalledProcessError:
-        pass
-    except FileNotFoundError:
-        pass
+    # except subprocess.CalledProcessError:
+    #     pass
+    # except FileNotFoundError:
+    #     pass
 
-    # 2. Fallback: read README.md first line
-    try:
-        with open("README.md", "r") as f:
-            line = f.readline()
-            for part in line.split():
-                if part.startswith("v"):
-                    return part
-    except FileNotFoundError:
+    # # 2. Fallback: read README.md first line
+    # try:
+    #     with open("README.md", "r") as f:
+    #         line = f.readline()
+    #         for part in line.split():
+    #             if part.startswith("v"):
+    #                 return part
+     except FileNotFoundError:
         return "unknown"
 
     return "unknown"
